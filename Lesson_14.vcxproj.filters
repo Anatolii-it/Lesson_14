@@ -18,4 +18,9 @@
       <Filter>main</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="input.txt">
+      <Filter>main</Filter>
+    </Text>
+  </ItemGroup>
 </Project>

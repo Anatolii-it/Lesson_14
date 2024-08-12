@@ -3,15 +3,19 @@
 #include <string>
 #include <fstream>
 
+using namespace std;
+
 struct Contact {
-    std::string name;
-    std::string phoneNumber;
+     string name;
+     string lname;
+     string prim;
+     string phoneNumber;
 };
 
 class PhoneBook {
 private:
-    std::vector<Contact> contacts;
-    const std::string filename = "phonebook.bin";
+     vector<Contact> contacts;
+    const  string filename = "phonebook.bin";
 
 public:
     PhoneBook() {
@@ -22,47 +26,48 @@ public:
         saveToFile();
     }
 
-    void addContact(const std::string& name, const std::string& phoneNumber) {
-        contacts.push_back({ name, phoneNumber });
-        std::cout << "Контакт додано успішно.\n";
+    void addContact(const  string& name, const  string& lname, const  string& prim, const  string& phoneNumber) {
+        contacts.push_back({ name, lname, prim, phoneNumber });
+         cout << "Контакт додано успішно.\n";
     }
 
     void displayAllContacts() const {
         if (contacts.empty()) {
-            std::cout << "Телефонна книга порожня.\n";
+             cout << "Телефонна книга порожня.\n";
             return;
         }
         for (const auto& contact : contacts) {
-            std::cout << "Ім'я: " << contact.name << ", Номер телефону: " << contact.phoneNumber << '\n';
+             cout << "Ім'я: " << contact.name << ", Номер телефону: " << contact.lname << '\n';
+             cout << "Ім'я: " << contact.phoneNumber << ", Номер телефону: " << contact.prim << '\n';
         }
     }
 
-    void searchContact(const std::string& name) const {
+    void searchContact(const  string& name) const {
         for (const auto& contact : contacts) {
             if (contact.name == name) {
-                std::cout << "Знайдено контакт - Ім'я: " << contact.name << ", Номер телефону: " << contact.phoneNumber << '\n';
+                 cout << "Знайдено контакт - Ім'я: " << contact.name << ", Номер телефону: " << contact.phoneNumber << '\n';
                 return;
             }
         }
-        std::cout << "Контакт з іменем " << name << " не знайдено.\n";
+         cout << "Контакт з іменем " << name << " не знайдено.\n";
     }
 
-    void deleteContact(const std::string& name) {
+    void deleteContact(const  string& name) {
         for (auto it = contacts.begin(); it != contacts.end(); ++it) {
             if (it->name == name) {
                 contacts.erase(it);
-                std::cout << "Контакт видалено успішно.\n";
+                 cout << "Контакт видалено успішно.\n";
                 return;
             }
         }
-        std::cout << "Контакт з іменем " << name << " не знайдено.\n";
+         cout << "Контакт з іменем " << name << " не знайдено.\n";
     }
 
 private:
     void saveToFile() const {
-        std::ofstream file(filename, std::ios::binary | std::ios::out);
+         ofstream file(filename,  ios::binary |  ios::out);
         if (!file) {
-            std::cerr << "Помилка збереження у файл.\n";
+             cerr << "Помилка збереження у файл.\n";
             return;
         }
 
@@ -84,9 +89,9 @@ private:
     }
 
     void loadFromFile() {
-        std::ifstream file(filename, std::ios::binary | std::ios::in);
+         ifstream file(filename,  ios::binary |  ios::in);
         if (!file) {
-            std::cout << "Не вдалося відкрити файл для читання, можливо, він не існує.\n";
+             cout << "Не вдалося відкрити файл для читання, можливо, він не існує.\n";
             return;
         }
 
@@ -115,42 +120,48 @@ private:
 int main() {
     PhoneBook phoneBook;
     int choice;
-    std::string name, phoneNumber;
+     string name, lname, prim, phoneNumber;
 
     do {
-        std::cout << "\n1. Додати контакт\n2. Пошук контакту\n3. Відобразити всі контакти\n4. Видалити контакт\n5. Вийти\n";
-        std::cout << "Введіть ваш вибір: ";
-        std::cin >> choice;
+         cout << "\n1. Додати контакт\n2. Пошук контакту\n3. Відобразити всі контакти\n4. Видалити контакт\n5. Вийти\n";
+         cout << "Введіть ваш вибір: ";
+         cin >> choice;
 
         switch (choice) {
         case 1:
-            std::cout << "Введіть ім'я: ";
-            std::cin.ignore(); // Для очищення буферу вводу
-            std::getline(std::cin, name);
-            std::cout << "Введіть номер телефону: ";
-            std::getline(std::cin, phoneNumber);
-            phoneBook.addContact(name, phoneNumber);
+             cout << "Введіть ім'я: ";
+             cin.ignore(); // Для очищення буферу вводу
+             getline( cin, name);
+             cout << "Введіть призвіще: ";
+             cin.ignore(); // Для очищення буферу вводу
+             getline(cin, lname);
+             cout << "Введіть примітку: ";
+             cin.ignore(); // Для очищення буферу вводу
+             getline(cin, prim);
+             cout << "Введіть номер телефону: ";
+             getline( cin, phoneNumber);
+            phoneBook.addContact(name,lname, prim, phoneNumber);
             break;
         case 2:
-            std::cout << "Введіть ім'я для пошуку: ";
-            std::cin.ignore();
-            std::getline(std::cin, name);
+             cout << "Введіть ім'я для пошуку: ";
+             cin.ignore();
+             getline( cin, name);
             phoneBook.searchContact(name);
             break;
         case 3:
             phoneBook.displayAllContacts();
             break;
         case 4:
-            std::cout << "Введіть ім'я для видалення: ";
-            std::cin.ignore();
-            std::getline(std::cin, name);
+             cout << "Введіть ім'я для видалення: ";
+             cin.ignore();
+             getline( cin, name);
             phoneBook.deleteContact(name);
             break;
         case 5:
-            std::cout << "Вихід з програми.\n";
+             cout << "Вихід з програми.\n";
             break;
         default:
-            std::cout << "Неправильний вибір. Спробуйте ще раз.\n";
+             cout << "Неправильний вибір. Спробуйте ще раз.\n";
         }
     } while (choice != 5);
 

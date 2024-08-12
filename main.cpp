@@ -37,18 +37,25 @@ public:
             return;
         }
         for (const auto& contact : contacts) {
-            cout << "Ім'я: " << contact.name << ", Прізвище: " << contact.lname << '\n';
-            cout << "Телефон: " << contact.phoneNumber << ", Примітки: " << contact.prim << '\n';
+            cout << "-------------------------------------------------------------" << '\n';
+            cout << "ПІБ: " << contact.name << "  " << contact.lname << '\n';
+            cout << "Тел: " << contact.phoneNumber << " " << contact.prim << '\n';
+            
         }
+        cout << "-------------------------------------------------------------" << '\n';
     }
 
     void searchContact(const string& name) const {
         for (const auto& contact : contacts) {
+            
             if (contact.name == name) {
-                cout << "Знайдено контакт - Ім'я: " << contact.name << ", Прізвище: " << contact.lname << '\n';
-                cout << "Телефон: " << contact.phoneNumber << ", Примітки: " << contact.prim << '\n';
+                cout << "-------------------------------------------------------------" << '\n';
+                cout << "ПІБ - " << contact.name << " " << contact.lname << '\n';
+                cout << "Тел - " << contact.phoneNumber << " " << contact.prim << '\n';
+                cout << "-------------------------------------------------------------" << '\n';
                 return;
             }
+            
         }
         cout << "Контакт з іменем " << name << " не знайдено.\n";
     }
@@ -67,7 +74,7 @@ public:
     void editContact(const string& name) {
         for (auto& contact : contacts) {
             if (contact.name == name) {
-                cout << "Редагування контакту - Ім'я: " << contact.name << '\n';
+                cout << "Редагування Ім'я: " << contact.name << '\n';
                 cout << "Введіть нове ім'я (залиште порожнім, щоб не змінювати): ";
                 string newName;
                 getline(cin, newName);

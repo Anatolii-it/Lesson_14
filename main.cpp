@@ -37,15 +37,15 @@ public:
             return;
         }
         for (const auto& contact : contacts) {
-            cout << contact.name << " " << contact.lname << '\n';
-            cout << "Тел: " << contact.phoneNumber << ", Примітки: " << contact.prim << '\n';
+            cout << "Ім'я: " << contact.name << ", Прізвище: " << contact.lname << '\n';
+            cout << "Телефон: " << contact.phoneNumber << ", Примітки: " << contact.prim << '\n';
         }
     }
 
     void searchContact(const string& name) const {
         for (const auto& contact : contacts) {
             if (contact.name == name) {
-                cout << "Знайдено контакт - Ім'я: " << contact.name << ", Призвище: " << contact.lname << '\n';
+                cout << "Знайдено контакт - Ім'я: " << contact.name << ", Прізвище: " << contact.lname << '\n';
                 cout << "Телефон: " << contact.phoneNumber << ", Примітки: " << contact.prim << '\n';
                 return;
             }
@@ -58,6 +58,37 @@ public:
             if (it->name == name) {
                 contacts.erase(it);
                 cout << "Контакт видалено успішно.\n";
+                return;
+            }
+        }
+        cout << "Контакт з іменем " << name << " не знайдено.\n";
+    }
+
+    void editContact(const string& name) {
+        for (auto& contact : contacts) {
+            if (contact.name == name) {
+                cout << "Редагування контакту - Ім'я: " << contact.name << '\n';
+                cout << "Введіть нове ім'я (залиште порожнім, щоб не змінювати): ";
+                string newName;
+                getline(cin, newName);
+                if (!newName.empty()) contact.name = newName;
+
+                cout << "Введіть нове прізвище (залиште порожнім, щоб не змінювати): ";
+                string newLname;
+                getline(cin, newLname);
+                if (!newLname.empty()) contact.lname = newLname;
+
+                cout << "Введіть новий номер телефону (залиште порожнім, щоб не змінювати): ";
+                string newPhoneNumber;
+                getline(cin, newPhoneNumber);
+                if (!newPhoneNumber.empty()) contact.phoneNumber = newPhoneNumber;
+
+                cout << "Введіть нові примітки (залиште порожнім, щоб не змінювати): ";
+                string newPrim;
+                getline(cin, newPrim);
+                if (!newPrim.empty()) contact.prim = newPrim;
+
+                cout << "Контакт успішно відредаговано.\n";
                 return;
             }
         }
@@ -142,14 +173,14 @@ int main() {
     string name, lname, prim, phoneNumber;
 
     do {
-        cout << "\n1. Додати контакт\n2. Пошук контакту\n3. Відобразити всі контакти\n4. Видалити контакт\n5. Вийти\n";
+        cout << "\n1. Додати контакт\n2. Пошук контакту\n3. Відобразити всі контакти\n4. Видалити контакт\n5. Редагувати контакт\n6. Вийти\n";
         cout << "Введіть ваш вибір: ";
         cin >> choice;
+        cin.ignore(); // Для очищення буферу вводу після вводу числа
 
         switch (choice) {
         case 1:
             cout << "Введіть ім'я: ";
-            cin.ignore(); // Для очищення буферу вводу
             getline(cin, name);
             cout << "Введіть призвище: ";
             getline(cin, lname);
@@ -161,7 +192,6 @@ int main() {
             break;
         case 2:
             cout << "Введіть ім'я для пошуку: ";
-            cin.ignore();
             getline(cin, name);
             phoneBook.searchContact(name);
             break;
@@ -170,17 +200,21 @@ int main() {
             break;
         case 4:
             cout << "Введіть ім'я для видалення: ";
-            cin.ignore();
             getline(cin, name);
             phoneBook.deleteContact(name);
             break;
         case 5:
+            cout << "Введіть ім'я для редагування: ";
+            getline(cin, name);
+            phoneBook.editContact(name);
+            break;
+        case 6:
             cout << "Вихід з програми.\n";
             break;
         default:
             cout << "Неправильний вибір. Спробуйте ще раз.\n";
         }
-    } while (choice != 5);
+    } while (choice != 6);
 
     return 0;
 }
